@@ -1,12 +1,22 @@
-import './styles.scss';
+import Box from '@mui/material/Box';
 import { Message } from '../Message';
 
-export function MessageView({ messageList }) {
+export function MessageView({ sx = [], messageList }) {
   return (
-    <div className='massage-view'>
-      {messageList.map(({ text, author }) => (
-        <Message text={text} author={author} />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        gap: 2,
+        p: 2,
+        backgroundColor: '#cccccc',
+        overflowY: 'auto',
+        ...sx,
+      }}
+    >
+      {messageList.map(({ id, text, author }) => (
+        <Message key={id} text={text} author={author} />
       ))}
-    </div>
+    </Box>
   );
 }
