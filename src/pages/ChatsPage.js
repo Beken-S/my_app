@@ -1,6 +1,17 @@
 import { Outlet } from 'react-router-dom';
-import { ChatLayout, ChatList } from '../components';
+import { ChatData, ChatLayout, ChatList } from '../components';
 
 export function ChatsPage() {
-  return <ChatLayout chatList={<ChatList />} chat={<Outlet />} />;
+  return (
+    <ChatData
+      render={(chatList, messageList, handleSendMessage) => {
+        return (
+          <ChatLayout
+            chatList={<ChatList chatList={chatList} />}
+            chat={<Outlet context={[messageList, handleSendMessage]} />}
+          />
+        );
+      }}
+    />
+  );
 }
