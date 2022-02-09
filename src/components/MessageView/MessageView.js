@@ -1,22 +1,12 @@
-import Box from '@mui/material/Box';
-import { Message } from '../Message';
+import { StyledMessageView } from './StyledMessageView';
+import { Message } from '..';
 
-export function MessageView({ sx = [], messageList }) {
+export function MessageView({ messageList }) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        gap: 2,
-        p: 2,
-        backgroundColor: '#cccccc',
-        overflowY: 'auto',
-        ...sx,
-      }}
-    >
+    <StyledMessageView>
       {messageList.map(({ id, text, author }) => (
         <Message key={id} text={text} author={author} />
       ))}
-    </Box>
+    </StyledMessageView>
   );
 }

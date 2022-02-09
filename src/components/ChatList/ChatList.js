@@ -1,18 +1,16 @@
+import { NavLink } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
-export function ChatList({ sx = [], chatList }) {
+export function ChatList({ chatList }) {
   return (
-    <List
-      sx={{
-        borderRight: 1,
-        ...sx,
-      }}
-    >
+    <List>
       {chatList.map(({ id, name }) => (
         <ListItem key={id} button>
-          <ListItemText primary={name} />
+          <NavLink to={`/chats/${id}`}>
+            <ListItemText primary={name} />
+          </NavLink>
         </ListItem>
       ))}
     </List>
