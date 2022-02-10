@@ -1,6 +1,5 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import { BasePage } from '../pages';
-import { ChatsPage } from '../pages';
+import { Routes, Route } from 'react-router-dom';
+import { BasePage, ChatsPage, ProfilePage } from '../pages';
 import { Chat } from '../components';
 
 export function Router() {
@@ -12,7 +11,7 @@ export function Router() {
           <Route index element={<span>Please select a chat</span>} />
           <Route path=':chatId' element={<Chat />} />
         </Route>
-        <Route path='/profile' element={<h2>Profile Page</h2>} />
+        <Route path='/profile' element={<ProfilePage />} />
       </Route>
       <Route path='*' element={<h2>404: Not found</h2>} />
     </Routes>
