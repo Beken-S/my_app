@@ -48,24 +48,19 @@ export function ChatData({ render }) {
     [chatList]
   );
 
-  const handleDelChat = useCallback(
-    (id) => {
-      setChatList((prevCatList) => {
-        const newChatList = [...prevCatList];
-        const index = newChatList.findIndex((chat) => chat.id === id);
-        newChatList.splice(index, 1);
-        return newChatList;
-      });
-      setMessageList((prevMassageList) => {
-        const { id, ...newMessageList } = prevMassageList;
-        return newMessageList;
-      });
-      if (chatId === id) {
-        navigate('/chats', { replace: true });
-      }
-    },
-    [chatId, navigate]
-  );
+  const handleDelChat = useCallback((id) => {
+    setChatList((prevCatList) => {
+      const newChatList = [...prevCatList];
+      const index = newChatList.findIndex((chat) => chat.id === id);
+      newChatList.splice(index, 1);
+      return newChatList;
+    });
+    setMessageList((prevMassageList) => {
+      const { ...newMessageList } = prevMassageList;
+      delete newMessageList[id];
+      return newMessageList;
+    });
+  }, []);
 
   useEffect(() => {
     let response;
