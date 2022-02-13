@@ -1,12 +1,16 @@
-import { CHANGE_NAME, TOGGLE_SHOW_NAME } from './actionTypes';
+import { CHANGE_USERNAME, TOGGLE_SHOW_USERNAME } from './actionTypes';
 
-export const toggleShowName = {
-  type: TOGGLE_SHOW_NAME,
-};
-
-export const changeName = (name) => {
+const changeUsername = (name) => {
   return {
-    type: CHANGE_NAME,
-    name,
+    type: CHANGE_USERNAME,
+    payload: name,
   };
 };
+
+const toggleShowUsername = () => {
+  return {
+    type: TOGGLE_SHOW_USERNAME,
+  };
+};
+
+export { changeUsername, toggleShowUsername };
