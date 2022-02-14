@@ -1,4 +1,9 @@
-import { ADD_MESSAGE, DELETE_MESSAGE } from './actionTypes';
+import {
+  ADD_MESSAGE,
+  DELETE_MESSAGE,
+  ADD_MESSAGE_LIST,
+  DELETE_MESSAGE_LIST,
+} from './actionTypes';
 
 const addMessage = ({ chatId, author, text }) => {
   return {
@@ -21,4 +26,18 @@ const deleteMessage = ({ chatId, messageId }) => {
   };
 };
 
-export { addMessage, deleteMessage };
+const addMessageList = (chatId) => {
+  return {
+    type: ADD_MESSAGE_LIST,
+    payload: chatId,
+  };
+};
+
+const deleteMessageList = (chatId) => {
+  return {
+    type: DELETE_MESSAGE_LIST,
+    payload: chatId,
+  };
+};
+
+export { addMessage, deleteMessage, addMessageList, deleteMessageList };
