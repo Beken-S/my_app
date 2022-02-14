@@ -1,12 +1,22 @@
+import { useSelector, shallowEqual } from 'react-redux';
+import { selectProfileShowUsername } from '../../store';
 import { StyledMessageView } from './StyledMessageView';
-import { Message } from '..';
+import { Message } from '../Message';
 
-export function MessageView({ messageList }) {
+export function MessageView({ username, messageList = [] }) {
+  const showUsername = useSelector(selectProfileShowUsername, shallowEqual);
+
   return (
     <StyledMessageView>
-      {messageList.map(({ id, text, author }) => (
-        <Message key={id} text={text} author={author} />
-      ))}
+      {messageList &&
+        messageList.map((message) => (
+          <Message
+            key={message.id}
+            message={message}
+            username={username}
+            showUsername={showUsername}
+          />
+        ))}
     </StyledMessageView>
   );
 }

@@ -1,20 +1,13 @@
-import { AUTHOR } from '../../utils/constants';
-import {
-  StyledMessageAuthor,
-  StyledMessageText,
-  StyledReceivedMessage,
-  StyledSentMessage,
-} from '.';
+import { MessageBody, StyledReceivedMessage, StyledSentMessage } from '.';
 
-export function Message({ text, author }) {
-  return author === AUTHOR.USER ? (
-    <StyledSentMessage elevation={3}>
-      <StyledMessageText variant='body2'>{text}</StyledMessageText>
+export function Message({ message, username, showUsername }) {
+  return message.author === username ? (
+    <StyledSentMessage>
+      <MessageBody message={message} showAuthor={showUsername} />
     </StyledSentMessage>
   ) : (
-    <StyledReceivedMessage elevation={3}>
-      <StyledMessageAuthor variant='subtitle1'>{author}</StyledMessageAuthor>
-      <StyledMessageText variant='body2'>{text}</StyledMessageText>
+    <StyledReceivedMessage>
+      <MessageBody message={message} />
     </StyledReceivedMessage>
   );
 }

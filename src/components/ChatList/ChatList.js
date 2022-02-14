@@ -1,38 +1,32 @@
-import { NavLink } from 'react-router-dom';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
+import { selectChats } from '../../store';
+import List from '@mui/material/List';
+import { ChatListItem } from '.';
+import { AddChatDialog } from '..';
 
-export function ChatList({ chatList, addChat, delChat }) {
-  const [newChatName, setNewChatName] = useState('');
+import Divider from '@mui/material/Divider';
 
-  const handleChangeNewChatName = (e) => {
-    setNewChatName(e.target.value);
-  };
+export function ChatList() {
+  const chatList = useSelector(selectChats, shallowEqual);
+  const [selectedChat, setSelectedChat] = useState('');
 
-  const handleAddChat = () => {
-    if (newChatName !== '') {
-      addChat(newChatName);
-    }
+  const handleSelectChat = (id) => {
+    setSelectedChat(id);
   };
 
   return (
     <>
-      <input value={newChatName} onChange={handleChangeNewChatName} />
-      <button onClick={handleAddChat}>Add</button>
+      <AddChatDialog />
+      <Divider />
       <List>
-        {chatList.map(({ id, name }) => (
-          <ListItem key={id} button>
-            <NavLink to={`/chats/${id}`}>
-              <ListItemText primary={name} />
-            </NavLink>
-            <ListItemButton onClick={() => delChat(id)}>
-              <DeleteIcon />
-            </ListItemButton>
-          </ListItem>
+        {chatList.map((chat) => (
+          <ChatListItem
+            key={chat.id}
+            item={chat}
+            selected={selectedChat === chat.id}
+            onClick={handleSelectChat}
+          />
         ))}
       </List>
     </>

@@ -1,4 +1,4 @@
-import { Router } from './router';
+import { Router } from './pages';
 import { Provider } from 'react-redux';
 import { store } from './store';
 

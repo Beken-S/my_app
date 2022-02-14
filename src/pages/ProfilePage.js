@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Container from '@mui/material/Container';
-import { changeName, toggleShowName } from '../store';
+import { changeUsername, toggleShowUsername, selectProfile } from '../store';
 
 export function ProfilePage() {
   const dispatch = useDispatch();
-  const { name, showName } = useSelector((state) => state);
+  const { username, showUsername } = useSelector(selectProfile, shallowEqual);
   const [newName, setNewName] = useState('');
 
   const handleToggleShowName = () => {
-    dispatch(toggleShowName);
+    dispatch(toggleShowUsername());
   };
 
   const handleChangeName = () => {
-    dispatch(changeName(newName));
+    dispatch(changeUsername(newName));
   };
 
   const handleChangeNewName = (e) => {
@@ -36,10 +36,10 @@ export function ProfilePage() {
       <input
         id='userName'
         type='checkbox'
-        value={showName}
+        checked={showUsername}
         onChange={handleToggleShowName}
       />
-      {showName && <h3>{name}</h3>}
+      {showUsername && <h3>{username}</h3>}
     </Container>
   );
 }

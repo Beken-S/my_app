@@ -1,7 +1,8 @@
 import { styled } from '@mui/system';
 
-export const StyledForm = styled('form', {
-  name: 'StyledForm',
+export const StyledSendMessageForm = styled('form', {
+  name: 'StyledSendMessageForm',
+  slot: 'Wrapper',
 })(({ theme }) => ({
   alignSelf: 'stretch',
   display: 'flex',
