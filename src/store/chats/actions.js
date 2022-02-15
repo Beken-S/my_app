@@ -1,9 +1,12 @@
 import { ADD_CHAT, DELETE_CHAT } from './actionTypes';
 
-const addChat = (chatName) => {
+const addChat = ({ chatId, chatName }) => {
   return {
     type: ADD_CHAT,
-    payload: chatName,
+    payload: {
+      chatId,
+      chatName,
+    },
   };
 };
 

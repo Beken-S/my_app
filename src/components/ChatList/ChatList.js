@@ -17,7 +17,7 @@ export function ChatList() {
 
   return (
     <>
-      <AddChatDialog />
+      <AddChatDialog chatList={chatList} />
       <Divider />
       <List>
         {chatList.map((chat) => (

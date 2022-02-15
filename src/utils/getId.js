@@ -1,4 +1,4 @@
-function getId(prefix, array, stack = false) {
+function getId(array, prefix = '', stack = false) {
   let lastItemId;
 
   if (stack) {

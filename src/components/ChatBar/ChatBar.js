@@ -12,8 +12,12 @@ export function ChatBar({ chatId }) {
 
   return (
     <StyledChatBar>
-      <Typography variant='subtitle1'>{currentChat.name}</Typography>
-      <ChatMenu chatId={currentChat.id} />
+      {currentChat && (
+        <>
+          <Typography variant='subtitle1'>{currentChat.name}</Typography>
+          <ChatMenu chatId={currentChat.id} />
+        </>
+      )}
     </StyledChatBar>
   );
 }

@@ -1,23 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { addChat, addMessageList, selectLastChatId } from '../../store';
+import { getId } from '../../utils';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addChat } from '../../store';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import { StyledDialogTextField } from '.';
 
-export function AddChatDialog() {
+export function AddChatDialog({ chatList }) {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
   const [chatName, setChatName] = useState('');
-  const [newChatAdded, setNewChatAdded] = useState(false);
-
-  const lastChatId = useSelector(selectLastChatId, shallowEqual);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,20 +32,10 @@ export function AddChatDialog() {
 
   const handleClickAdd = () => {
     if (chatName === '') return setError(true);
-    dispatch(addChat(chatName));
+    dispatch(addChat({ chatId: getId(chatList, 'chat'), chatName }));
     setChatName('');
-    setNewChatAdded(true);
     handleClose();
   };
-
-  useEffect(() => {
-    if (newChatAdded) {
-      dispatch(addMessageList(lastChatId));
-      setNewChatAdded(false);
-    }
-  }, [newChatAdded]);
-
-  useEffect(() => console.log('update'), [lastChatId]);
 
   return (
     <>
@@ -62,16 +50,11 @@ export function AddChatDialog() {
         <DialogTitle>{'Add Chat'}</DialogTitle>
         <DialogContent>
           <DialogContentText>Enter the chat name.</DialogContentText>
-          <TextField
-            autoFocus
+          <StyledDialogTextField
             value={chatName}
             onChange={handleChangeChatName}
-            margin='dense'
             label='Chat Name'
-            fullWidth
-            variant='standard'
             error={error}
-            helperText='Incorrect entry.'
           />
         </DialogContent>
         <DialogActions>

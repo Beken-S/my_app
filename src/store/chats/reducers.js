@@ -1,4 +1,3 @@
-import { getId } from '../../utils';
 import { ADD_CHAT, DELETE_CHAT } from './actionTypes';
 
 const initialState = [];
@@ -6,11 +5,12 @@ const initialState = [];
 export function chatsReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_CHAT: {
+      const { chatId, chatName } = action.payload;
       return [
         ...state,
         {
-          id: getId('chat', state),
-          name: action.payload,
+          id: chatId,
+          name: chatName,
         },
       ];
     }

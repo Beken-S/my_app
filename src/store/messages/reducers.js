@@ -2,9 +2,10 @@ import { getId } from '../../utils';
 import {
   ADD_MESSAGE,
   DELETE_MESSAGE,
-  ADD_MESSAGE_LIST,
-  DELETE_MESSAGE_LIST,
+  // ADD_MESSAGE_LIST,
+  // DELETE_MESSAGE_LIST,
 } from './actionTypes';
+import { ADD_CHAT, DELETE_CHAT } from '../chats/actionTypes';
 
 const initialState = {};
 
@@ -17,7 +18,7 @@ export function messagesReducer(state = initialState, action) {
 
       const prevMessageList = state[chatId];
       const newMessage = {
-        id: getId('msg', prevMessageList, true),
+        id: getId(prevMessageList, 'msg', true),
         author,
         text,
       };
@@ -44,8 +45,8 @@ export function messagesReducer(state = initialState, action) {
         [chatId]: newMessageList,
       };
     }
-    case ADD_MESSAGE_LIST: {
-      const chatId = action.payload;
+    case ADD_CHAT: {
+      const { chatId } = action.payload;
 
       if (state.hasOwnProperty(chatId)) return state;
 
@@ -54,7 +55,7 @@ export function messagesReducer(state = initialState, action) {
         [chatId]: [],
       };
     }
-    case DELETE_MESSAGE_LIST: {
+    case DELETE_CHAT: {
       const chatId = action.payload;
 
       if (!state.hasOwnProperty(chatId)) return state;
