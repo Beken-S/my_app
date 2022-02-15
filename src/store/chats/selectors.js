@@ -1,7 +1,7 @@
 const selectChats = (state) => state.chats;
 
-const selectChatById = (state, chatId) => {
-  return state.chats.find((chat) => chat.id === chatId);
+const selectChatById = (chatId) => {
+  return (state) => state.chats.find((chat) => chat.id === chatId);
 };
 
 const selectLastChatId = (state) => {

@@ -1,5 +1,5 @@
 import { AUTHOR } from '../../utils';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useParams, Navigate } from 'react-router-dom';
 import {
@@ -13,10 +13,11 @@ export function Chat() {
   const { chatId } = useParams();
   const dispatch = useDispatch();
   const username = useSelector(selectProfileUsername, shallowEqual);
-  const messageList = useSelector(
-    (store) => selectMessagesByChatId(store, chatId),
-    shallowEqual
+  const getSelectMessages = useMemo(
+    () => selectMessagesByChatId(chatId),
+    [chatId]
   );
+  const messageList = useSelector(getSelectMessages);
 
   useEffect(() => {
     let response;

@@ -1,5 +1,7 @@
 const selectMessages = (state) => state.messages;
 
-const selectMessagesByChatId = (state, chatId) => state.messages[chatId];
+const selectMessagesByChatId = (chatId) => {
+  return (state) => state.messages[chatId];
+};
 
 export { selectMessages, selectMessagesByChatId };
