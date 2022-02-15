@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 import { AUTHOR } from '../../utils/constants';
 
 export function ChatData({ render }) {
+  const navigate = useNavigate();
   const { chatId } = useParams();
 
   const [messageList, setMessageList] = useState({
@@ -29,6 +30,38 @@ export function ChatData({ render }) {
     [chatId]
   );
 
+  const handleAddChat = useCallback(
+    (name) => {
+      const lastChatId =
+        chatList.length > 0 ? chatList[chatList.length - 1].id : 'chat0';
+      const newChatId = `chat${Number(lastChatId.substr(4)) + 1}`;
+      const newChat = {
+        id: newChatId,
+        name,
+      };
+      setChatList((prevCatList) => [...prevCatList, newChat]);
+      setMessageList((prevMassageList) => ({
+        ...prevMassageList,
+        [newChatId]: [],
+      }));
+    },
+    [chatList]
+  );
+
+  const handleDelChat = useCallback((id) => {
+    setChatList((prevCatList) => {
+      const newChatList = [...prevCatList];
+      const index = newChatList.findIndex((chat) => chat.id === id);
+      newChatList.splice(index, 1);
+      return newChatList;
+    });
+    setMessageList((prevMassageList) => {
+      const { ...newMessageList } = prevMassageList;
+      delete newMessageList[id];
+      return newMessageList;
+    });
+  }, []);
+
   useEffect(() => {
     let response;
     if (messageList[chatId] && messageList[chatId][0]?.author === AUTHOR.USER) {
@@ -44,5 +77,11 @@ export function ChatData({ render }) {
     return <Navigate to='/chats' replace />;
   }
 
-  return render(chatList, messageList[chatId], handleSendMessage);
+  return render(
+    chatList,
+    messageList[chatId],
+    handleSendMessage,
+    handleAddChat,
+    handleDelChat
+  );
 }
