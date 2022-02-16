@@ -1,13 +1,16 @@
-import { useState, useRef } from 'react';
-import { StyledForm } from './StyledForm';
+import { useState, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addMessage } from '../../store';
+import { StyledSendMessageForm } from '.';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
 
-export function Form({ onSubmit }) {
+export function SendMessageForm({ chatId, username }) {
   const [value, setValue] = useState('');
   const inputRef = useRef();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -15,18 +18,21 @@ export function Form({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value !== '') {
-      onSubmit(value);
+      dispatch(addMessage({ chatId, author: username, text: value }));
       setValue('');
       inputRef.current?.focus();
     }
   };
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [chatId]);
+
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledSendMessageForm onSubmit={handleSubmit}>
       <TextField
         multiline
         fullWidth
-        autoFocus={true}
         inputRef={inputRef}
         value={value}
         onChange={handleChange}
@@ -36,6 +42,6 @@ export function Form({ onSubmit }) {
           <SendIcon />
         </IconButton>
       </Tooltip>
-    </StyledForm>
+    </StyledSendMessageForm>
   );
 }

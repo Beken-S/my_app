@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { BasePage, ChatsPage, ProfilePage } from '../pages';
+import { BasePage, ChatsPage, ProfilePage } from '.';
 import { Chat } from '../components';
 
 export function Router() {

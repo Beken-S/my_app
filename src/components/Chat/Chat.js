@@ -1,12 +1,47 @@
-import { useOutletContext } from 'react-router-dom';
-import { MessageView, Form } from '..';
+import { AUTHOR } from '../../utils';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useParams, Navigate } from 'react-router-dom';
+import {
+  addMessage,
+  selectProfileUsername,
+  selectMessagesByChatId,
+} from '../../store';
+import { ChatBar, MessageView, SendMessageForm } from '..';
 
 export function Chat() {
-  const [messageList, handleSendMessage] = useOutletContext();
+  const { chatId } = useParams();
+  const dispatch = useDispatch();
+  const username = useSelector(selectProfileUsername, shallowEqual);
+  const getSelectMessages = useMemo(
+    () => selectMessagesByChatId(chatId),
+    [chatId]
+  );
+  const messageList = useSelector(getSelectMessages);
+
+  useEffect(() => {
+    let response;
+    if (messageList && messageList[0]?.author === username) {
+      response = setTimeout(
+        () =>
+          dispatch(
+            addMessage({ chatId, author: AUTHOR.BOT, text: 'Zzzzz....' })
+          ),
+        1500
+      );
+    }
+    return () => clearTimeout(response);
+  }, [chatId, messageList]);
+
+  if (!messageList) {
+    return <Navigate to='/chats' replace />;
+  }
+
   return (
     <>
-      <MessageView messageList={messageList} />
-      <Form onSubmit={handleSendMessage} />
+      <ChatBar chatId={chatId} />
+      <MessageView username={username} messageList={messageList} />
+      <SendMessageForm chatId={chatId} username={username} />
     </>
   );
 }

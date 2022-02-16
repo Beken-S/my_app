@@ -1,10 +1,13 @@
 import { styled, lighten } from '@mui/system';
 import Paper from '@mui/material/Paper';
 
-export const StyledSentMessage = styled(Paper, {
-  name: 'StyledSentMessage',
-  slot: 'Wrapper',
-})(({ theme }) => ({
+export const StyledSentMessage = styled(
+  (props) => <Paper elevation={3} {...props} />,
+  {
+    name: 'StyledSentMessage',
+    slot: 'Wrapper',
+  }
+)(({ theme }) => ({
   flex: '0 0 auto',
   width: '100%',
   maxWidth: '450px',

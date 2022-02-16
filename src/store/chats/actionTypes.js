@@ -1,0 +1,4 @@
+const ADD_CHAT = 'CHATS::ADD_CHAT';
+const DELETE_CHAT = 'CHATS::DELETE_CHAT';
+
+export { ADD_CHAT, DELETE_CHAT };
