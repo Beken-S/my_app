@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../../store';
+import { addMessageWithReplyFromBot } from '../../store';
 import { StyledSendMessageForm } from '.';
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
@@ -18,7 +18,12 @@ export function SendMessageForm({ chatId, username }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value !== '') {
-      dispatch(addMessage({ chatId, author: username, text: value }));
+      const message = {
+        chatId,
+        author: username,
+        text: value,
+      };
+      dispatch(addMessageWithReplyFromBot(message));
       setValue('');
       inputRef.current?.focus();
     }

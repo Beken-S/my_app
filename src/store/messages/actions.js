@@ -1,3 +1,4 @@
+import { TimeoutBot, AUTHOR } from '../../utils';
 import {
   ADD_MESSAGE,
   DELETE_MESSAGE,
@@ -14,6 +15,21 @@ const addMessage = ({ chatId, author, text }) => {
       text,
     },
   };
+};
+
+const addMessageWithReplyFromBot = (message) => (dispatch, getState) => {
+  const { chatId, author } = message;
+
+  dispatch(addMessage(message));
+
+  if (author !== AUTHOR.BOT) {
+    const botMessage = {
+      chatId,
+      author: AUTHOR.BOT,
+      text: 'Zzzz...',
+    };
+    TimeoutBot.setup(() => dispatch(addMessage(botMessage)), 2000);
+  }
 };
 
 const deleteMessage = ({ chatId, messageId }) => {
@@ -40,4 +56,4 @@ const deleteMessage = ({ chatId, messageId }) => {
 //   };
 // };
 
-export { addMessage, deleteMessage };
+export { addMessage, deleteMessage, addMessageWithReplyFromBot };
