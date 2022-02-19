@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessageWithReplyFromBot } from '../../store';
 import { StyledSendMessageForm } from '.';
@@ -12,22 +12,25 @@ export function SendMessageForm({ chatId, username }) {
   const inputRef = useRef();
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setValue(e.target.value);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (value !== '') {
-      const message = {
-        chatId,
-        author: username,
-        text: value,
-      };
-      dispatch(addMessageWithReplyFromBot(message));
-      setValue('');
-      inputRef.current?.focus();
-    }
-  };
+  }, []);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (value !== '') {
+        const message = {
+          chatId,
+          author: username,
+          text: value,
+        };
+        dispatch(addMessageWithReplyFromBot(message));
+        setValue('');
+        inputRef.current?.focus();
+      }
+    },
+    [chatId, username, value, dispatch]
+  );
 
   useEffect(() => {
     inputRef.current?.focus();

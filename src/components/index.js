@@ -2,6 +2,7 @@ export * from './AddChatDialog';
 export * from './BaseLayout';
 export * from './Chat';
 export * from './ChatBar';
+export * from './ChatDialog';
 export * from './ChatLayout';
 export * from './ChatList';
 export * from './ChatMenu';
