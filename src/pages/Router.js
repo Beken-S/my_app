@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { BasePage, ChatsPage, ProfilePage } from '.';
+import { BasePage, ChatsPage, ProfilePage, GistsPage } from '.';
 import { Chat } from '../components';
 
 export function Router() {
@@ -12,6 +12,7 @@ export function Router() {
           <Route path=':chatId' element={<Chat />} />
         </Route>
         <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/gists' element={<GistsPage />} />
       </Route>
       <Route path='*' element={<h2>404: Not found</h2>} />
     </Routes>

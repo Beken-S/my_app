@@ -13,6 +13,9 @@ const header = (
       <li>
         <NavLink to='/profile'>Profile</NavLink>
       </li>
+      <li>
+        <NavLink to='/gists'>Gists</NavLink>
+      </li>
     </ul>
   </nav>
 );
