@@ -1,37 +1,17 @@
-import { AUTHOR } from '../../utils';
-import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { useMemo } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import { useParams, Navigate } from 'react-router-dom';
-import {
-  addMessage,
-  selectProfileUsername,
-  selectMessagesByChatId,
-} from '../../store';
+import { selectProfileUsername, selectMessagesByChatId } from '../../store';
 import { ChatBar, MessageView, SendMessageForm } from '..';
 
 export function Chat() {
   const { chatId } = useParams();
-  const dispatch = useDispatch();
   const username = useSelector(selectProfileUsername, shallowEqual);
   const getSelectMessages = useMemo(
     () => selectMessagesByChatId(chatId),
     [chatId]
   );
   const messageList = useSelector(getSelectMessages);
-
-  useEffect(() => {
-    let response;
-    if (messageList && messageList[0]?.author === username) {
-      response = setTimeout(
-        () =>
-          dispatch(
-            addMessage({ chatId, author: AUTHOR.BOT, text: 'Zzzzz....' })
-          ),
-        1500
-      );
-    }
-    return () => clearTimeout(response);
-  }, [chatId, messageList]);
 
   if (!messageList) {
     return <Navigate to='/chats' replace />;

@@ -1,6 +1,8 @@
+// import { TimeoutBot, AUTHOR } from '../../utils';
 import {
   ADD_MESSAGE,
   DELETE_MESSAGE,
+  ADD_MESSAGE_WITH_REPLY_FROM_BOT,
   // ADD_MESSAGE_LIST,
   // DELETE_MESSAGE_LIST,
 } from './actionTypes';
@@ -13,6 +15,28 @@ const addMessage = ({ chatId, author, text }) => {
       author,
       text,
     },
+  };
+};
+
+// const addMessageWithReplyFromBot = (message) => (dispatch, getState) => {
+//   const { chatId, author } = message;
+
+//   dispatch(addMessage(message));
+
+//   if (author !== AUTHOR.BOT) {
+//     const botMessage = {
+//       chatId,
+//       author: AUTHOR.BOT,
+//       text: 'Zzzz...',
+//     };
+//     TimeoutBot.setup(() => dispatch(addMessage(botMessage)), 2000);
+//   }
+// };
+
+const addMessageWithReplyFromBot = (payload) => {
+  return {
+    type: ADD_MESSAGE_WITH_REPLY_FROM_BOT,
+    payload,
   };
 };
 
@@ -40,4 +64,4 @@ const deleteMessage = ({ chatId, messageId }) => {
 //   };
 // };
 
-export { addMessage, deleteMessage };
+export { addMessage, deleteMessage, addMessageWithReplyFromBot };

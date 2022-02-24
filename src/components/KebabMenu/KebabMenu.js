@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Menu from '@mui/material/Menu';
 import { KebabMenuButton, KebabMenuItem } from '.';
 
@@ -6,12 +6,13 @@ export function KebabMenu({ options }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
+  const handleClick = useCallback((e) => {
+    setAnchorEl(e.currentTarget);
+  }, []);
+
+  const handleClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   return (
     <>
