@@ -1,46 +1,25 @@
-// import { TimeoutBot, AUTHOR } from '../../utils';
 import {
   ADD_MESSAGE,
   DELETE_MESSAGE,
-  ADD_MESSAGE_WITH_REPLY_FROM_BOT,
-  // ADD_MESSAGE_LIST,
-  // DELETE_MESSAGE_LIST,
-} from './actionTypes';
+  CLEAR_MESSAGES,
+  FETCH_ADD_MESSAGE,
+  FETCH_DELETE_MESSAGE,
+} from '.';
 
-const addMessage = ({ chatId, author, text }) => {
+const getAddMessage = ({ chatId, messageId, authorUid, author, text }) => {
   return {
     type: ADD_MESSAGE,
     payload: {
       chatId,
+      messageId,
+      authorUid,
       author,
       text,
     },
   };
 };
 
-// const addMessageWithReplyFromBot = (message) => (dispatch, getState) => {
-//   const { chatId, author } = message;
-
-//   dispatch(addMessage(message));
-
-//   if (author !== AUTHOR.BOT) {
-//     const botMessage = {
-//       chatId,
-//       author: AUTHOR.BOT,
-//       text: 'Zzzz...',
-//     };
-//     TimeoutBot.setup(() => dispatch(addMessage(botMessage)), 2000);
-//   }
-// };
-
-const addMessageWithReplyFromBot = (payload) => {
-  return {
-    type: ADD_MESSAGE_WITH_REPLY_FROM_BOT,
-    payload,
-  };
-};
-
-const deleteMessage = ({ chatId, messageId }) => {
+const getDeleteMessage = ({ chatId, messageId }) => {
   return {
     type: DELETE_MESSAGE,
     payload: {
@@ -50,18 +29,31 @@ const deleteMessage = ({ chatId, messageId }) => {
   };
 };
 
-// const addMessageList = (chatId) => {
-//   return {
-//     type: ADD_MESSAGE_LIST,
-//     payload: chatId,
-//   };
-// };
+const getFetchAddMessage = ({ chatId, authorUid, author, text }) => {
+  return {
+    type: FETCH_ADD_MESSAGE,
+    payload: { chatId, authorUid, author, text },
+  };
+};
 
-// const deleteMessageList = (chatId) => {
-//   return {
-//     type: DELETE_MESSAGE_LIST,
-//     payload: chatId,
-//   };
-// };
+const getFetchDeleteMessage = ({ chatId, messageId }) => {
+  return {
+    type: FETCH_DELETE_MESSAGE,
+    payload: { chatId, messageId },
+  };
+};
 
-export { addMessage, deleteMessage, addMessageWithReplyFromBot };
+const getClearMessages = (chatId) => {
+  return {
+    type: CLEAR_MESSAGES,
+    payload: chatId,
+  };
+};
+
+export {
+  getAddMessage,
+  getDeleteMessage,
+  getFetchAddMessage,
+  getFetchDeleteMessage,
+  getClearMessages,
+};

@@ -1,5 +1,5 @@
 export * from './actions';
-export * from './actionTypes';
+export * from './actionsTypes';
 export * from './reducers';
 export * from './sagas';
 export * from './selectors';

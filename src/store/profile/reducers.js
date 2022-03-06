@@ -1,26 +1,30 @@
-import { CHANGE_USERNAME, TOGGLE_SHOW_USERNAME } from './actionTypes';
+import { SET_SHOW_USERNAME, SET_USERNAME } from '.';
+import { LOGOUT } from '..';
 
 const initialState = {
-  username: 'User',
-  showUsername: false,
+  username: null,
+  showUsername: null,
 };
 
 export function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_USERNAME: {
+    case SET_USERNAME: {
       return {
         ...state,
         username: action.payload,
       };
     }
-    default: {
-      return state;
-    }
-    case TOGGLE_SHOW_USERNAME: {
+    case SET_SHOW_USERNAME: {
       return {
         ...state,
-        showUsername: !state.showUsername,
+        showUsername: action.payload,
       };
+    }
+    case LOGOUT: {
+      return initialState;
+    }
+    default: {
+      return state;
     }
   }
 }
