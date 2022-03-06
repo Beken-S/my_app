@@ -1,13 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { addMessageWithReplyFromBot } from '../../store';
-import { StyledSendMessageForm } from '.';
-import IconButton from '@mui/material/IconButton';
-import SendIcon from '@mui/icons-material/Send';
-import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
+import { getFetchAddMessage } from '../../store';
+import { SendMessageFormBody, StyledSendMessageForm } from '.';
 
-export function SendMessageForm({ chatId, username }) {
+export function SendMessageForm({ chatId, userId, username }) {
   const [value, setValue] = useState('');
   const inputRef = useRef();
   const dispatch = useDispatch();
@@ -15,21 +11,22 @@ export function SendMessageForm({ chatId, username }) {
   const handleChange = useCallback((e) => {
     setValue(e.target.value);
   }, []);
+
   const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
+    (value) => {
       if (value !== '') {
         const message = {
           chatId,
+          authorUid: userId,
           author: username,
           text: value,
         };
-        dispatch(addMessageWithReplyFromBot(message));
+        dispatch(getFetchAddMessage(message));
         setValue('');
         inputRef.current?.focus();
       }
     },
-    [chatId, username, value, dispatch]
+    [chatId, userId, username, dispatch]
   );
 
   useEffect(() => {
@@ -37,19 +34,15 @@ export function SendMessageForm({ chatId, username }) {
   }, [chatId]);
 
   return (
-    <StyledSendMessageForm onSubmit={handleSubmit}>
-      <TextField
-        multiline
-        fullWidth
-        inputRef={inputRef}
-        value={value}
-        onChange={handleChange}
-      />
-      <Tooltip title='Send'>
-        <IconButton type='send'>
-          <SendIcon />
-        </IconButton>
-      </Tooltip>
+    <StyledSendMessageForm onSubmit={handleSubmit} value={value}>
+      <SendMessageFormBody>
+        <SendMessageFormBody.TextField
+          inputRef={inputRef}
+          value={value}
+          onChange={handleChange}
+        />
+        <SendMessageFormBody.Button />
+      </SendMessageFormBody>
     </StyledSendMessageForm>
   );
 }

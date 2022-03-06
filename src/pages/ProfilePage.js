@@ -1,19 +1,25 @@
 import { useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {
+  getChangeUsername,
+  getChangeShowUsername,
+  selectProfile,
+} from '../store';
+import { selectUserId } from '../store/auth';
 import Container from '@mui/material/Container';
-import { changeUsername, toggleShowUsername, selectProfile } from '../store';
 
 export function ProfilePage() {
   const dispatch = useDispatch();
+  const userId = useSelector(selectUserId, shallowEqual);
   const { username, showUsername } = useSelector(selectProfile, shallowEqual);
   const [newName, setNewName] = useState('');
 
-  const handleToggleShowName = () => {
-    dispatch(toggleShowUsername());
+  const handleChangeName = () => {
+    dispatch(getChangeUsername(userId, newName));
   };
 
-  const handleChangeName = () => {
-    dispatch(changeUsername(newName));
+  const handleToggleShowName = (e) => {
+    dispatch(getChangeShowUsername(userId, e.target.checked));
   };
 
   const handleChangeNewName = (e) => {

@@ -1,11 +1,10 @@
-import { getId } from '../../utils';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addChat } from '../../store';
-import { AddChatActions, AddChatButton, AddChatContent } from '.';
+import { getFetchAddChat } from '../../store';
+import { AddChatActions, AddChatButton, AddChatContent, AddChatTitle } from '.';
 import { ChatDialog } from '..';
 
-export function AddChatDialog({ chatList }) {
+export function AddChatDialog() {
   const dispatch = useDispatch();
   const [error, setError] = useState(false);
   const [chatName, setChatName] = useState('');
@@ -18,22 +17,28 @@ export function AddChatDialog({ chatList }) {
     [error]
   );
 
+  const handleClose = useCallback(() => {
+    setChatName('');
+    setError(false);
+  }, []);
+
   const handleAction = useCallback(() => {
     if (chatName === '') {
       setError(true);
       return false;
     }
-    dispatch(addChat({ chatId: getId(chatList, 'chat'), chatName }));
-    setChatName('');
+    dispatch(getFetchAddChat(chatName));
     return true;
-  }, [chatList, chatName, dispatch]);
+  }, [chatName, dispatch]);
 
   return (
     <ChatDialog
       action={handleAction}
+      close={handleClose}
       error={error}
       button={<AddChatDialog.Button />}
     >
+      <AddChatDialog.Title />
       <AddChatDialog.Content
         value={chatName}
         error={error}
@@ -44,6 +49,7 @@ export function AddChatDialog({ chatList }) {
   );
 }
 
+AddChatDialog.Title = AddChatTitle;
 AddChatDialog.Button = AddChatButton;
 AddChatDialog.Content = AddChatContent;
 AddChatDialog.Actions = AddChatActions;

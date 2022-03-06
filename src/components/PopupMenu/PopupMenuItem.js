@@ -1,20 +1,22 @@
 import { useDispatch } from 'react-redux';
+import { usePopupMenuContext } from '.';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export function KebabMenuItem({ option, close }) {
-  const { icon, text, actions } = option;
+export function PopupMenuItem({ icon, text, actions, component, to }) {
+  const { handleClose } = usePopupMenuContext();
   const dispatch = useDispatch();
+
   const handleClick = () => {
     if (Boolean(actions)) {
       actions.forEach(({ action, payload }) => dispatch(action(payload)));
     }
-    if (Boolean(close)) close();
+    handleClose();
   };
 
   return (
-    <MenuItem onClick={handleClick}>
+    <MenuItem component={component} to={to} onClick={handleClick}>
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
       {text && <ListItemText primary={text} />}
     </MenuItem>

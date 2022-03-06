@@ -3,9 +3,11 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useParams, Navigate } from 'react-router-dom';
 import { selectProfileUsername, selectMessagesByChatId } from '../../store';
 import { ChatBar, MessageView, SendMessageForm } from '..';
+import { selectUserId } from '../../store';
 
 export function Chat() {
   const { chatId } = useParams();
+  const userId = useSelector(selectUserId, shallowEqual);
   const username = useSelector(selectProfileUsername, shallowEqual);
   const getSelectMessages = useMemo(
     () => selectMessagesByChatId(chatId),
@@ -21,7 +23,7 @@ export function Chat() {
     <>
       <ChatBar chatId={chatId} />
       <MessageView username={username} messageList={messageList} />
-      <SendMessageForm chatId={chatId} username={username} />
+      <SendMessageForm userId={userId} chatId={chatId} username={username} />
     </>
   );
 }

@@ -1,25 +1,7 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { BaseLayout } from '../components';
-
-const header = (
-  <nav>
-    <ul>
-      <li>
-        <NavLink to='/'>Home</NavLink>
-      </li>
-      <li>
-        <NavLink to='/chats'>Chats</NavLink>
-      </li>
-      <li>
-        <NavLink to='/profile'>Profile</NavLink>
-      </li>
-      <li>
-        <NavLink to='/gists'>Gists</NavLink>
-      </li>
-    </ul>
-  </nav>
-);
+import { Header } from '../components';
 
 export function BasePage() {
-  return <BaseLayout header={header} content={<Outlet />} />;
+  return <BaseLayout header={<Header />} content={<Outlet />} />;
 }

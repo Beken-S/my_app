@@ -1,12 +1,13 @@
 import { useCallback, useState } from 'react';
+import { PopupMenuProvider } from '.';
+import { PopupMenuItem } from './PopupMenuItem';
 import Menu from '@mui/material/Menu';
-import { KebabMenuButton, KebabMenuItem } from '.';
 
-export function KebabMenu({ options }) {
+export function PopupMenu({ children, button }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = useCallback((e) => {
+  const handleOpen = useCallback((e) => {
     setAnchorEl(e.currentTarget);
   }, []);
 
@@ -15,13 +16,13 @@ export function KebabMenu({ options }) {
   }, []);
 
   return (
-    <>
-      <KebabMenuButton onClick={handleClick} />
+    <PopupMenuProvider value={{ open: open, handleOpen, handleClose }}>
+      {button}
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {options.map((option) => (
-          <KebabMenuItem key={option.id} option={option} close={handleClose} />
-        ))}
+        {children}
       </Menu>
-    </>
+    </PopupMenuProvider>
   );
 }
+
+PopupMenu.Item = PopupMenuItem;
