@@ -1,9 +1,11 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { selectProfileShowUsername } from '../../store';
+import { selectUserId } from '../../store';
 import { StyledMessageView } from './StyledMessageView';
 import { Message } from '../Message';
 
 export function MessageView({ username, messageList = [] }) {
+  const userId = useSelector(selectUserId, shallowEqual);
   const showUsername = useSelector(selectProfileShowUsername, shallowEqual);
 
   return (
@@ -13,6 +15,7 @@ export function MessageView({ username, messageList = [] }) {
           <Message
             key={message.id}
             message={message}
+            userId={userId}
             username={username}
             showUsername={showUsername}
           />

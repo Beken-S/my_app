@@ -1,16 +1,16 @@
-import { deleteChat } from '../../store';
+import { getFetchDeleteChat } from '../../store';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { KebabMenu } from '..';
+import { PopupMenu } from '..';
+import { ChatMenuButton } from '.';
 
 export function ChatMenu({ chatId }) {
-  const options = [
-    {
-      id: 'delete-chat',
-      icon: <DeleteOutlineIcon fontSize='small' />,
-      text: 'Delete chat',
-      actions: [{ action: deleteChat, payload: chatId }],
-    },
-  ];
-
-  return <KebabMenu options={options} />;
+  return (
+    <PopupMenu button={<ChatMenuButton />}>
+      <PopupMenu.Item
+        icon={<DeleteOutlineIcon fontSize='small' />}
+        text={'Delete chat'}
+        actions={[{ action: getFetchDeleteChat, payload: chatId }]}
+      />
+    </PopupMenu>
+  );
 }

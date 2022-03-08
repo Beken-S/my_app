@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import { DialogProvider } from '.';
 
-export function ChatDialog({ children, action, button }) {
+export function ChatDialog({ children, action, close, button }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = useCallback(() => {
@@ -10,8 +10,9 @@ export function ChatDialog({ children, action, button }) {
   }, []);
 
   const handleClose = useCallback(() => {
+    close && close();
     setOpen(false);
-  }, []);
+  }, [close]);
 
   const handleAction = useCallback(() => {
     const success = action();

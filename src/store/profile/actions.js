@@ -1,16 +1,41 @@
-import { CHANGE_USERNAME, TOGGLE_SHOW_USERNAME } from './actionTypes';
+import {
+  CHANGE_USERNAME,
+  CHANGE_SHOW_USERNAME,
+  SET_USERNAME,
+  SET_SHOW_USERNAME,
+} from '.';
 
-const changeUsername = (name) => {
+const getChangeUsername = (userId, username) => {
   return {
     type: CHANGE_USERNAME,
-    payload: name,
+    payload: { userId, username },
   };
 };
 
-const toggleShowUsername = () => {
+const getChangeShowUsername = (userId, showUsername) => {
   return {
-    type: TOGGLE_SHOW_USERNAME,
+    type: CHANGE_SHOW_USERNAME,
+    payload: { userId, showUsername },
   };
 };
 
-export { changeUsername, toggleShowUsername };
+const getSetUsername = (username) => {
+  return {
+    type: SET_USERNAME,
+    payload: username,
+  };
+};
+
+const getSetShowUsername = (showUsername) => {
+  return {
+    type: SET_SHOW_USERNAME,
+    payload: showUsername,
+  };
+};
+
+export {
+  getChangeUsername,
+  getChangeShowUsername,
+  getSetUsername,
+  getSetShowUsername,
+};

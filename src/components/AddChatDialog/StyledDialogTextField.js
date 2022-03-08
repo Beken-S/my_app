@@ -8,7 +8,6 @@ export const StyledDialogTextField = styled(
       margin='dense'
       fullWidth
       variant='standard'
-      helperText='Incorrect entry.'
       {...props}
     />
   ),

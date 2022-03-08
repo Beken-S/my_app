@@ -1,19 +1,53 @@
+import { shallowEqual, useSelector } from 'react-redux';
+import { selectAuthStatus } from '../store/auth';
 import { Routes, Route } from 'react-router-dom';
-import { BasePage, ChatsPage, ProfilePage, GistsPage } from '.';
-import { Chat } from '../components';
+import {
+  BasePage,
+  ChatsPage,
+  HomePage,
+  ProfilePage,
+  GistsPage,
+  PrivateRoute,
+  PublicRoute,
+} from '.';
+import {
+  Chat,
+  Header,
+  PleaseSelectChat,
+  SignInForm,
+  SignUpForm,
+} from '../components';
 
 export function Router() {
+  const authenticated = useSelector(selectAuthStatus, shallowEqual);
+
   return (
     <Routes>
       <Route path='/' element={<BasePage />}>
-        <Route index element={<h2>Home Page</h2>} />
-        <Route path='/chats' element={<ChatsPage />}>
-          <Route index element={<span>Please select a chat</span>} />
-          <Route path=':chatId' element={<Chat />} />
+        <Route path='' element={<PublicRoute authenticated={authenticated} />}>
+          <Route path='' element={<HomePage />}>
+            <Route index element={<SignUpForm />} />
+            <Route path='sign_in' element={<SignInForm />} />
+          </Route>
         </Route>
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route
+          path='/chats'
+          element={<PrivateRoute authenticated={authenticated} />}
+        >
+          <Route path='' element={<ChatsPage />}>
+            <Route index element={<PleaseSelectChat />} />
+            <Route path=':chatId' element={<Chat />} />
+          </Route>
+        </Route>
+        <Route
+          path='/profile'
+          element={<PrivateRoute authenticated={authenticated} />}
+        >
+          <Route path='' element={<ProfilePage />} />
+        </Route>
         <Route path='/gists' element={<GistsPage />} />
       </Route>
+      <Route path='/test' element={<Header />} />
       <Route path='*' element={<h2>404: Not found</h2>} />
     </Routes>
   );

@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
-import { chatsReducer } from './chats';
-import { gistsReducer, gistsRequestReducer } from './gists';
-import { messagesReducer } from './messages';
+import { authReducer } from './auth';
 import { profileReducer } from './profile';
+import { chatsReducer } from './chats';
+import { messagesReducer } from './messages';
+import { gistsReducer, gistsRequestReducer } from './gists';
 
 const rootReducer = combineReducers({
+  auth: authReducer,
+  profile: profileReducer,
   chats: chatsReducer,
   messages: messagesReducer,
-  profile: profileReducer,
   gistsRequest: gistsRequestReducer,
   gists: gistsReducer,
 });

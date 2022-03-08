@@ -1,24 +1,19 @@
-import { getId } from '../../utils';
-import {
-  ADD_MESSAGE,
-  DELETE_MESSAGE,
-  // ADD_MESSAGE_LIST,
-  // DELETE_MESSAGE_LIST,
-} from './actionTypes';
-import { ADD_CHAT, DELETE_CHAT } from '../chats/actionTypes';
+import { ADD_MESSAGE, DELETE_MESSAGE, CLEAR_MESSAGES } from '.';
+import { ADD_CHAT, DELETE_CHAT } from '../chats';
 
 const initialState = {};
 
 export function messagesReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_MESSAGE: {
-      const { chatId, author, text } = action.payload;
+      const { chatId, messageId, authorUid, author, text } = action.payload;
 
       if (!state[chatId]) return state;
 
       const prevMessageList = state[chatId];
       const newMessage = {
-        id: getId(prevMessageList, 'msg', true),
+        id: messageId,
+        authorUid,
         author,
         text,
       };
@@ -63,6 +58,13 @@ export function messagesReducer(state = initialState, action) {
       const { ...newState } = state;
       delete newState[chatId];
       return newState;
+    }
+    case CLEAR_MESSAGES: {
+      const chatId = action.payload;
+      return {
+        ...state,
+        [chatId]: [],
+      };
     }
     default: {
       return state;
