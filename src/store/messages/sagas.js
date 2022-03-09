@@ -23,23 +23,23 @@ import {
   getNewMessageRef,
 } from '../../services';
 
-function* addMessageHandler(action) {
+function addMessageHandler(action) {
   const { chatId, authorUid, author, text } = action.payload;
   const newMessage = { authorUid, author, text };
 
-  yield set(getNewMessageRef(chatId), newMessage);
+  set(getNewMessageRef(chatId), newMessage);
 }
 
-function* deleteMessageHandler(action) {
+function deleteMessageHandler(action) {
   const { chatId, messageId } = action.payload;
 
-  yield remove(getMessageRef(chatId, messageId));
+  remove(getMessageRef(chatId, messageId));
 }
 
-function* deleteMessageListHandler(action) {
+function deleteMessageListHandler(action) {
   const chatId = action.payload;
 
-  yield remove(getMessageListRef(chatId));
+  remove(getMessageListRef(chatId));
 }
 
 function getAddMessageChannel(chatId) {

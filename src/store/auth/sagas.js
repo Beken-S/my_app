@@ -41,7 +41,7 @@ function* fetchSignUp(action) {
       password
     );
 
-    yield set(getProfileRef(userCredential.user.uid), {
+    yield call(set, getProfileRef(userCredential.user.uid), {
       username: name,
       showUsername: false,
     });

@@ -91,14 +91,16 @@ function* watchProfile() {
   }
 }
 
-function* changeUsernameHandler(action) {
+function changeUsernameHandler(action) {
   const { userId, username } = action.payload;
-  yield set(getProfileUsernameRef(userId), username);
+
+  set(getProfileUsernameRef(userId), username);
 }
 
-function* changeShowUsernameHandler(action) {
+function changeShowUsernameHandler(action) {
   const { userId, showUsername } = action.payload;
-  yield set(getProfileShowUsernameRef(userId), showUsername);
+
+  set(getProfileShowUsernameRef(userId), showUsername);
 }
 
 function* watchChangeUsername() {
