@@ -7,7 +7,7 @@ import { ChatForm } from '..';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-export function SignUpForm() {
+export default function SignUpForm() {
   const error = false; //Заглушка (не доделал показ ошибок)
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
