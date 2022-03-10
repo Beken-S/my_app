@@ -93,4 +93,12 @@ function* watchAuth() {
   }
 }
 
-export { watchFetchSignIn, watchFetchSignUp, watchLogout, watchAuth };
+export {
+  fetchSignUp,
+  fetchSignIn,
+  fetchLogout,
+  watchFetchSignIn,
+  watchFetchSignUp,
+  watchLogout,
+  watchAuth,
+};
