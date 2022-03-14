@@ -12,5 +12,3 @@ export const theme = createTheme({
     },
   },
 });
-
-console.log(theme);

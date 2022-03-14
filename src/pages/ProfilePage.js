@@ -8,7 +8,7 @@ import {
 import { selectUserId } from '../store/auth';
 import Container from '@mui/material/Container';
 
-export function ProfilePage() {
+export default function ProfilePage() {
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId, shallowEqual);
   const { username, showUsername } = useSelector(selectProfile, shallowEqual);

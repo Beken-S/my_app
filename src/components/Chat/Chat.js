@@ -5,7 +5,7 @@ import { selectProfileUsername, selectMessagesByChatId } from '../../store';
 import { ChatBar, MessageView, SendMessageForm } from '..';
 import { selectUserId } from '../../store';
 
-export function Chat() {
+export default function Chat() {
   const { chatId } = useParams();
   const userId = useSelector(selectUserId, shallowEqual);
   const username = useSelector(selectProfileUsername, shallowEqual);

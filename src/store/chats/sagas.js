@@ -29,7 +29,7 @@ function* getChats() {
   if (snapshot.exists()) {
     const chatList = [];
 
-    yield snapshot.forEach((childSnapshot) => {
+    snapshot.forEach((childSnapshot) => {
       chatList.push({ id: childSnapshot.key, name: childSnapshot.val() });
     });
 
@@ -37,16 +37,16 @@ function* getChats() {
   }
 }
 
-function* addChatHandler(action) {
+function addChatHandler(action) {
   const chatName = action.payload;
 
-  yield set(getNewChatRef(), chatName);
+  set(getNewChatRef(), chatName);
 }
 
-function* deleteChatHandler(action) {
+function deleteChatHandler(action) {
   const chatId = action.payload;
 
-  yield remove(getChatRef(chatId));
+  remove(getChatRef(chatId));
 }
 
 function* watchAddChat() {

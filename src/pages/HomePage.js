@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { HomePageLayout } from '../components';
 
-export function HomePage() {
+export default function HomePage() {
   return <HomePageLayout form={<Outlet />} />;
 }
